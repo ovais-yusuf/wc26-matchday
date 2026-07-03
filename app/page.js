@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { T, M, M2, M3, KO } from '../lib/staticData';
+import { T, M, M2, M3, KO, R16 } from '../lib/staticData';
 import { TOURNAMENT_THEMES } from '../lib/editorial';
 import MatchExplorer from '../components/MatchExplorer';
 import TournamentLeaders from '../components/TournamentLeaders';
@@ -109,6 +109,7 @@ export default function Page() {
           <button className="tab" role="tab" aria-selected={activeMainTab === 'md2'} onClick={() => setActiveMainTab('md2')}>Matchday 2</button>
           <button className="tab" role="tab" aria-selected={activeMainTab === 'md3'} onClick={() => setActiveMainTab('md3')}>Matchday 3</button>
           <button className={`tab ${activeMainTab === 'knockouts' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'knockouts'} onClick={() => setActiveMainTab('knockouts')}>Knockouts</button>
+          <button className={`tab ${activeMainTab === 'r16' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'r16'} onClick={() => setActiveMainTab('r16')}>Round of 16</button>
           <button className={`tab ${activeMainTab === 'bracket' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'bracket'} onClick={() => setActiveMainTab('bracket')}>Bracket</button>
           <button className={`tab tab-stats ${activeMainTab === 'standings' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'standings'} onClick={() => setActiveMainTab('standings')} style={{ marginLeft: 'auto' }}>📊 Standings</button>
           <button className={`tab tab-stats ${activeMainTab === 'stats' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'stats'} onClick={() => setActiveMainTab('stats')}>🏅 Stats</button>
@@ -207,6 +208,26 @@ export default function Page() {
               <p>The group stage is over. 32 teams remain. One game, one chance. Canada have already eliminated South Africa. Tap any fixture for the full match report, lineups, stats and tactical breakdown.</p>
             </section>
             <MatchExplorer T={T} M={KO} />
+          </>
+        )}
+
+        {activeMainTab === 'r16' && (
+          <>
+            <section className="hero">
+              <div className="eyebrow">FIFA World Cup 26 · Round of 16</div>
+              <h1>The last 16. One game, everything on the line.</h1>
+              <p>All eight Round of 16 fixtures confirmed. The Iberian derby, England vs Mexico on hostile turf, and Messi vs Switzerland. Tap any fixture for the full match preview, confirmed lineups once they drop, and live match reports.</p>
+              <div className="ctx">
+                <div className="pill"><span>Dates</span><b>Jul 4 to Jul 7</b></div>
+                <div className="pill"><span>Match of the round</span><b>Spain vs Portugal</b></div>
+                <div className="pill"><span>Upset watch</span><b>Morocco vs Canada</b></div>
+                <div className="pill"><span>Home support</span><b>Mexico at Estadio Banorte</b></div>
+              </div>
+            </section>
+            <MatchExplorer T={T} M={R16} />
+            <p className="scope" style={{ marginTop: 38 }}>
+              Argentina and Colombia fixtures depend on tonight&apos;s results. Both are listed with the expected opponents.
+            </p>
           </>
         )}
 
