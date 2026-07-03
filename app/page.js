@@ -204,9 +204,9 @@ export default function Page() {
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Knockouts</div>
               <h1>Round of 32</h1>
-              <p>The group stage is over. 32 teams remain. One game, one chance. Canada have already eliminated South Africa. Scores and results update live the moment they drop.</p>
+              <p>The group stage is over. 32 teams remain. One game, one chance. Canada have already eliminated South Africa. Tap any fixture for the full match report, lineups, stats and tactical breakdown.</p>
             </section>
-            <KnockoutBracket T={T} KO={KO} />
+            <MatchExplorer T={T} M={KO} />
           </>
         )}
 
