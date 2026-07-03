@@ -1,6 +1,29 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+function initials(name) {
+  return (name || '?').split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase() || '?';
+}
+
+function PlayerAvatar({ player }) {
+  const [failed, setFailed] = useState(false);
+  if (player.photo && !failed) {
+    return (
+      <img
+        className="ldr-photo"
+        src={player.photo}
+        alt={player.name}
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+  return (
+    <div className="ldr-photo ldr-photo-init" aria-label={player.name}>
+      {initials(player.shortName || player.name)}
+    </div>
+  );
+}
+
 const FLAG_MAP = {
   'Mexico': '🇲🇽', 'South Africa': '🇿🇦', 'Canada': '🇨🇦',
   'USA': '🇺🇸', 'United States': '🇺🇸', 'Paraguay': '🇵🇾',
@@ -30,12 +53,7 @@ function PlayerRow({ rank, player, statValue, statSub }) {
   return (
     <div className="ldr-row">
       <span className="ldr-rank">{rank}</span>
-      <img
-        className="ldr-photo"
-        src={player.photo}
-        alt={player.name}
-        onError={(e) => { e.currentTarget.style.opacity = '0'; }}
-      />
+      <PlayerAvatar player={player} />
       <span className="ldr-info">
         <span className="ldr-name">{player.shortName || player.name}</span>
         <span className="ldr-team">{flag} {player.teamName}</span>
