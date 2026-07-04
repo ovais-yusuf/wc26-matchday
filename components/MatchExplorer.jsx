@@ -1356,7 +1356,7 @@ function MatchDetail({ m, T, onClose, onOpenPlayer, hasResult }) {
           <div>
             <h3 className="matchup">{h.f} {h.n} <span style={{ color: 'var(--mute)', fontWeight: 400 }}>v</span> {a.n} {a.f}</h3>
             <div className="meta">
-              <span>Group {m.grp}</span>
+              <span>{m.round ? m.round === 'R32' ? 'Round of 32' : m.round === 'R16' ? 'Round of 16' : m.round : `Group ${m.grp}`}</span>
               <span>{m.ds}</span>
               {isFinalOrLive
                 ? <span><b style={{ color: result.status === 'live' ? 'var(--teal)' : 'var(--green)' }}>{result.statusLabel}</b></span>
@@ -1621,7 +1621,7 @@ export default function MatchExplorer({ T, M }) {
                     <div className="kick"><div className="t">{m.t}</div><div className="z">{m.z}</div></div>
                   )}
                   <div className="fixture">
-                    <div className="grp">Group {m.grp}</div>
+                    <div className="grp">{m.round ? m.round === 'R32' ? 'Round of 32' : m.round === 'R16' ? 'Round of 16' : m.round : `Group ${m.grp}`}</div>
                     <div className="teams">
                       <span className="side"><span className="flag">{h.f}</span>{h.n}</span>
                       <span className="vs">v</span>

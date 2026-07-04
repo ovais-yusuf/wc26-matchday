@@ -76,8 +76,8 @@ header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);
 .mark .sub{font-family:var(--sans);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute)}
 .host{font-family:var(--sans);font-size:11px;letter-spacing:.16em;color:var(--mute);text-transform:uppercase}
 .host b{color:var(--teal);font-weight:600}
-.tabs{display:flex;gap:8px;padding:0 24px 16px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
-.tab{font-family:var(--sans);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.012);color:var(--mute);padding:8px 15px;border-radius:var(--pill);cursor:pointer;transition:color .16s,border-color .16s,background .16s}
+.tabs{display:flex;gap:8px;padding:0 24px 16px;max-width:1100px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:var(--sans);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.012);color:var(--mute);padding:8px 15px;border-radius:var(--pill);cursor:pointer;transition:color .16s,border-color .16s,background .16s;flex-shrink:0;white-space:nowrap}
 .tab:hover:not([disabled]):not([aria-selected="true"]){color:var(--bone);border-color:var(--line-2)}
 .tab[aria-selected="true"]{color:var(--tab-active-txt);background:var(--gold);border-color:var(--gold);font-weight:700}
 .tab[disabled]{opacity:.38;cursor:not-allowed}
