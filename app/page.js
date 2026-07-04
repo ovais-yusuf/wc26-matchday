@@ -7,6 +7,7 @@ import TournamentLeaders from '../components/TournamentLeaders';
 import GroupStandings from '../components/GroupStandings';
 import KnockoutBracket from '../components/KnockoutBracket';
 import BracketView from '../components/BracketView';
+import TournamentChat from '../components/TournamentChat';
 
 const THEME_TONE = {
   gold: { color: 'var(--gold)', border: 'rgba(243,200,104,.35)', bg: 'rgba(243,200,104,.06)' },
@@ -251,6 +252,8 @@ export default function Page() {
           <TournamentLeaders fullPage onSeeAll={() => {}} />
         )}
       </main>
+
+      <TournamentChat />
 
       <footer className="foot">
         <div className="wrap">
