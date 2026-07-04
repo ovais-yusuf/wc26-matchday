@@ -1,8 +1,6 @@
 import { getLeaders } from '../../../lib/apiFootball';
 
-// Tournament leaders — aggregated from all completed AND live matches.
-// Revalidates every 60 s so in-progress goals appear quickly.
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

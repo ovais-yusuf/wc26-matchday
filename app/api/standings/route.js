@@ -1,8 +1,7 @@
 import { getStandings } from '../../../lib/apiFootball';
 import { M, M2, M3, T } from '../../../lib/staticData';
 
-// Revalidate every 60s during MD3 live play.
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
