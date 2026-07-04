@@ -1251,9 +1251,9 @@ function MatchResultPanel({ home, away, date, result, setResult }) {
         const d = await r.json();
         if (!cancelled && !d.error) {
           setResult(d);
-          // Keep polling every 30 s while live; back off to 120 s once final
-          if (!cancelled) {
-            const interval = d.status === 'live' ? 30000 : d.status === 'final' ? 120000 : 60000;
+          // Only keep polling while the match is not yet finished
+          if (!cancelled && d.status !== 'final') {
+            const interval = d.status === 'live' ? 30000 : 60000;
             timer = setTimeout(fetchResult, interval);
           }
         }
@@ -1567,8 +1567,9 @@ export default function MatchExplorer({ T, M }) {
         if (Object.keys(newEntries).length > 0) {
           setScoreMap((prev) => ({ ...prev, ...newEntries }));
         }
-        // Poll every 30 s while any match on this date is live, else 120 s
-        if (!cancelled) {
+        // Stop polling once every match on this date is final
+        const allFinal = (d.scores || []).length > 0 && (d.scores || []).every(s => s.status === 'final');
+        if (!cancelled && !allFinal) {
           const interval = hasLive ? 30000 : 120000;
           timers.push(setTimeout(() => fetchScoresForDate(date), interval));
         }

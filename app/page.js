@@ -108,7 +108,7 @@ export default function Page() {
           <button className="tab" role="tab" aria-selected={activeMainTab === 'matchday'} onClick={() => setActiveMainTab('matchday')}>Matchday 1</button>
           <button className="tab" role="tab" aria-selected={activeMainTab === 'md2'} onClick={() => setActiveMainTab('md2')}>Matchday 2</button>
           <button className="tab" role="tab" aria-selected={activeMainTab === 'md3'} onClick={() => setActiveMainTab('md3')}>Matchday 3</button>
-          <button className={`tab ${activeMainTab === 'knockouts' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'knockouts'} onClick={() => setActiveMainTab('knockouts')}>Knockouts</button>
+          <button className={`tab ${activeMainTab === 'knockouts' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'knockouts'} onClick={() => setActiveMainTab('knockouts')}>Round of 32</button>
           <button className={`tab ${activeMainTab === 'r16' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'r16'} onClick={() => setActiveMainTab('r16')}>Round of 16</button>
           <button className={`tab ${activeMainTab === 'bracket' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'bracket'} onClick={() => setActiveMainTab('bracket')}>Bracket</button>
           <button className={`tab tab-stats ${activeMainTab === 'standings' ? 'tab-active' : ''}`} role="tab" aria-selected={activeMainTab === 'standings'} onClick={() => setActiveMainTab('standings')} style={{ marginLeft: 'auto' }}>📊 Standings</button>
