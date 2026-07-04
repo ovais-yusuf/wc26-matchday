@@ -1,8 +1,8 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { getLeaders, getScoreboard } from '../../../lib/apiFootball';
 import { T, KO, R16 } from '../../../lib/staticData';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 function normToDisplay(norm) {
   for (const team of Object.values(T)) {
@@ -82,16 +82,18 @@ export async function POST(request) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        const s = client.messages.stream({
-          model: 'claude-haiku-4-5-20251001',
+        const s = await client.chat.completions.create({
+          model: 'gpt-4o-mini',
           max_tokens: 450,
-          system,
-          messages,
+          stream: true,
+          messages: [
+            { role: 'system', content: system },
+            ...messages,
+          ],
         });
-        for await (const event of s) {
-          if (event.type === 'content_block_delta' && event.delta?.type === 'text_delta') {
-            controller.enqueue(encoder.encode(event.delta.text));
-          }
+        for await (const chunk of s) {
+          const text = chunk.choices[0]?.delta?.content;
+          if (text) controller.enqueue(encoder.encode(text));
         }
         controller.close();
       } catch (err) {

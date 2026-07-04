@@ -1,6 +1,6 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(request) {
   const { home, away, result } = await request.json();
@@ -13,7 +13,6 @@ export async function POST(request) {
   const label = result.statusLabel || 'FT';
   const winner = hs > as ? home : as > hs ? away : null;
 
-  // Goal events
   const goals = (result.events || []).filter(e => e.type === 'goal' || e.type === 'penalty');
   const ownGoals = (result.events || []).filter(e => e.type === 'own-goal');
   const cards = (result.events || []).filter(e => e.type === 'yellow-card' || e.type === 'red-card');
@@ -33,7 +32,6 @@ export async function POST(request) {
     return `${e.minute || '?'}' — ${name} (${team}) · ${e.type === 'yellow-card' ? 'Yellow' : 'Red'}`;
   }).join('\n') : '';
 
-  // Top team stats (possession, shots, passes)
   const KEY_STATS = ['possessionPct', 'totalShots', 'shotsOnTarget', 'totalPasses', 'foulsCommitted', 'offsides'];
   const statLines = (result.teamStats || []).map(ts => {
     const filtered = (ts.stats || []).filter(s => KEY_STATS.includes(s.key));
@@ -42,7 +40,6 @@ export async function POST(request) {
     return `${teamName}: ${filtered.map(s => `${s.label} ${s.value}`).join(' | ')}`;
   }).filter(Boolean).join('\n');
 
-  // MOTM
   const motmLine = result.motm
     ? `Man of the Match: ${result.motm.displayName || result.motm.shortName} (${result.motm.teamId === result.homeId ? home : away})`
     : '';
@@ -62,12 +59,12 @@ ${statLines || 'Not available'}
 Write 3–4 short paragraphs in the style of a quality football journalist — atmospheric, specific, never generic. Use actual player names from the events. Lead with the most dramatic moment. End with what this result means for the tournament. Do not use headers or bullet points. Keep it under 250 words.`;
 
   try {
-    const msg = await client.messages.create({
-      model: 'claude-sonnet-4-6',
+    const msg = await client.chat.completions.create({
+      model: 'gpt-4o-mini',
       max_tokens: 400,
       messages: [{ role: 'user', content: prompt }],
     });
-    const report = msg.content[0]?.text || '';
+    const report = msg.choices[0]?.message?.content || '';
     return Response.json({ report }, {
       headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600' },
     });
