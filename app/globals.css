@@ -999,11 +999,13 @@ footer.foot b{color:var(--mute);font-weight:600}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── TOURNAMENT CHAT ── */
-.chat-fab{position:fixed;bottom:24px;right:24px;z-index:200;display:inline-flex;align-items:center;gap:7px;background:var(--gold);border:none;border-radius:var(--pill);padding:11px 20px;cursor:pointer;font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--tab-active-txt);box-shadow:0 6px 28px -6px rgba(0,0,0,.35);transition:transform .15s,opacity .15s}
-.chat-fab:hover{transform:translateY(-2px);opacity:.92}
-.chat-fab-open{padding:11px 16px;font-size:16px}
-.chat-fab-icon{font-size:15px}
-.chat-fab-label{font-size:13.5px}
+@keyframes fab-pulse{0%,100%{box-shadow:0 6px 32px -4px rgba(212,146,14,.55),0 0 0 0 rgba(212,146,14,.45)}60%{box-shadow:0 6px 32px -4px rgba(212,146,14,.55),0 0 0 10px rgba(212,146,14,0)}}
+[data-theme="dark"] .chat-fab:not(.chat-fab-open){animation:fab-pulse 2.4s ease-in-out infinite}
+.chat-fab{position:fixed;bottom:28px;right:28px;z-index:200;display:inline-flex;align-items:center;gap:8px;background:var(--gold);border:none;border-radius:var(--pill);padding:14px 22px;cursor:pointer;font-family:var(--sans);font-size:14.5px;font-weight:700;color:var(--tab-active-txt);box-shadow:0 8px 36px -6px rgba(212,146,14,.6),0 2px 12px rgba(0,0,0,.18);transition:transform .18s,box-shadow .18s,opacity .15s;animation:fab-pulse 2.4s ease-in-out infinite}
+.chat-fab:hover{transform:translateY(-3px);box-shadow:0 12px 40px -4px rgba(212,146,14,.7),0 4px 16px rgba(0,0,0,.2);animation:none}
+.chat-fab-open{padding:13px 18px;font-size:17px;animation:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.chat-fab-icon{font-size:16px}
+.chat-fab-label{font-size:14.5px;letter-spacing:.01em}
 .chat-panel{position:fixed;bottom:84px;right:24px;z-index:200;width:360px;max-width:calc(100vw - 32px);border-radius:var(--r-lg);background:var(--ink-2);border:1px solid var(--line);box-shadow:0 24px 72px -16px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden;animation:chat-up .22s cubic-bezier(.22,1,.36,1)}
 @keyframes chat-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .chat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--ink-3)}
