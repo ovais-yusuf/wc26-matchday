@@ -2,7 +2,13 @@ import OpenAI from 'openai';
 import { getLeaders, getScoreboard } from '../../../lib/apiFootball';
 import { T, KO, R16 } from '../../../lib/staticData';
 
+export const maxDuration = 30;
+
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+function withTimeout(promise, ms) {
+  return Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))]);
+}
 
 function normToDisplay(norm) {
   for (const team of Object.values(T)) {
@@ -15,11 +21,11 @@ async function buildContext() {
   const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
   let leaders = {};
-  try { leaders = await getLeaders(); } catch { /* graceful degrade */ }
+  try { leaders = await withTimeout(getLeaders(), 4000); } catch { /* graceful degrade */ }
 
   const koDates = ['20260629','20260630','20260701','20260702','20260703','20260704','20260705','20260706','20260707'];
   const past = koDates.filter(d => d <= todayStr);
-  const scoreArrays = await Promise.allSettled(past.map(d => getScoreboard(d)));
+  const scoreArrays = await Promise.allSettled(past.map(d => withTimeout(getScoreboard(d), 4000)));
   const allScores = scoreArrays.flatMap(r => r.status === 'fulfilled' ? r.value : []);
 
   const resultLines = allScores
