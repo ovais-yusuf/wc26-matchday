@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { getLeaders, getScoreboard } from '../../../lib/apiFootball';
+import { getScoreboard } from '../../../lib/apiFootball';
 import { T, KO, R16 } from '../../../lib/staticData';
 
 export const maxDuration = 30;
@@ -17,11 +17,15 @@ function normToDisplay(norm) {
   return norm.charAt(0).toUpperCase() + norm.slice(1);
 }
 
-async function buildContext() {
+async function buildContext(baseUrl) {
   const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
+  // Call our own /api/leaders endpoint — faster than hitting ESPN directly from this function
   let leaders = {};
-  try { leaders = await withTimeout(getLeaders(), 4000); } catch { /* graceful degrade */ }
+  try {
+    const res = await withTimeout(fetch(`${baseUrl}/api/leaders`), 5000);
+    leaders = await res.json();
+  } catch { /* graceful degrade */ }
 
   const koDates = ['20260629','20260630','20260701','20260702','20260703','20260704','20260705','20260706','20260707'];
   const past = koDates.filter(d => d <= todayStr);
@@ -80,8 +84,12 @@ export async function POST(request) {
     return Response.json({ error: 'messages required' }, { status: 400 });
   }
 
+  const host = request.headers.get('host') || 'wc26-matchday.vercel.app';
+  const proto = host.startsWith('localhost') ? 'http' : 'https';
+  const baseUrl = `${proto}://${host}`;
+
   let system;
-  try { system = await buildContext(); }
+  try { system = await buildContext(baseUrl); }
   catch { system = 'You are WC26 Analyst, the AI assistant for the 2026 FIFA World Cup app. Answer questions about the tournament.'; }
 
   const encoder = new TextEncoder();
