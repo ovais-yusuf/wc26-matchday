@@ -17,19 +17,12 @@ function normToDisplay(norm) {
   return norm.charAt(0).toUpperCase() + norm.slice(1);
 }
 
-async function buildContext(baseUrl) {
+async function buildContext(leaders = {}) {
   const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-
-  // Call our own /api/leaders endpoint — faster than hitting ESPN directly from this function
-  let leaders = {};
-  try {
-    const res = await withTimeout(fetch(`${baseUrl}/api/leaders`), 5000);
-    leaders = await res.json();
-  } catch { /* graceful degrade */ }
 
   const koDates = ['20260629','20260630','20260701','20260702','20260703','20260704','20260705','20260706','20260707'];
   const past = koDates.filter(d => d <= todayStr);
-  const scoreArrays = await Promise.allSettled(past.map(d => withTimeout(getScoreboard(d), 4000)));
+  const scoreArrays = await Promise.allSettled(past.map(d => withTimeout(getScoreboard(d), 5000)));
   const allScores = scoreArrays.flatMap(r => r.status === 'fulfilled' ? r.value : []);
 
   const resultLines = allScores
@@ -84,12 +77,8 @@ export async function POST(request) {
     return Response.json({ error: 'messages required' }, { status: 400 });
   }
 
-  const host = request.headers.get('host') || 'wc26-matchday.vercel.app';
-  const proto = host.startsWith('localhost') ? 'http' : 'https';
-  const baseUrl = `${proto}://${host}`;
-
   let system;
-  try { system = await buildContext(baseUrl); }
+  try { system = await buildContext(body.leaders || {}); }
   catch { system = 'You are WC26 Analyst, the AI assistant for the 2026 FIFA World Cup app. Answer questions about the tournament.'; }
 
   const encoder = new TextEncoder();

@@ -19,8 +19,14 @@ export default function TournamentChat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
+  const [leaders, setLeaders] = useState(null);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Pre-fetch leaders once so the chat API doesn't need to call ESPN itself
+  useEffect(() => {
+    fetch('/api/leaders').then(r => r.json()).then(setLeaders).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (open && inputRef.current) inputRef.current.focus();
@@ -48,6 +54,7 @@ export default function TournamentChat() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: next.map(msg => ({ role: msg.role, content: msg.content })),
+          leaders,
         }),
       });
 
