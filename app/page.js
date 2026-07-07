@@ -8,6 +8,7 @@ import GroupStandings from '../components/GroupStandings';
 import KnockoutBracket from '../components/KnockoutBracket';
 import BracketView from '../components/BracketView';
 import TournamentChat from '../components/TournamentChat';
+import CatchMeUp from '../components/CatchMeUp';
 
 const THEME_TONE = {
   gold: { color: 'var(--gold)', border: 'rgba(243,200,104,.35)', bg: 'rgba(243,200,104,.06)' },
@@ -118,6 +119,7 @@ export default function Page() {
       </header>
 
       <main className="wrap">
+        <CatchMeUp />
         {activeMainTab === 'matchday' && (
           <>
             <section className="hero">
