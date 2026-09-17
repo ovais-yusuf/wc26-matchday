@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { getEditorial, getTeamIdentity, UPSET, CHEMISTRY, ZONE_COORDS, STORYLINES } from '../lib/editorial';
-import { loadScores } from '../lib/espnScoreboard';
+import { loadScores, scoreForMatch } from '../lib/espnScoreboard';
 
 /* ---------- helpers ---------- */
 const confLabel = (c) => (c === 'high' ? 'High confidence' : c === 'lean' ? 'Lean' : 'Toss-up');
@@ -25,11 +25,6 @@ function fixtureDate(m) {
 const HEADSHOT = (id) => `https://a.espncdn.com/i/headshots/soccer/players/full/${id}.png`;
 // Byline for the "My Thoughts" tactical column; change this to your name.
 const AUTHOR = "Ovais's Analysis";
-
-// The server's getScoreboard already converts ESPN names back to static-data keys
-// (e.g. ESPN "South Korea" → "korearepublic") so the client just normalises the
-// static name and it matches the score map key directly.
-function resolveScoreNorm(name) { return _pn(name); }
 
 // Match an ESPN full name to the API-Football photo map (keyed by initial+surname).
 const _pn = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[^a-z]/g, '');
@@ -1657,8 +1652,7 @@ export default function MatchExplorer({ T, M }) {
               const i = M.indexOf(m);
               const h = T[m.h], a = T[m.a];
               const fav = m.fav === 'h' ? h : m.fav === 'a' ? a : null;
-              const scoreKey = `${resolveScoreNorm(h.n)}-${resolveScoreNorm(a.n)}`;
-              const score = scoreMap[scoreKey];
+              const score = scoreForMatch(h.n, a.n, scoreMap);
               return (
                 <button className="match" key={i} onClick={() => setOpen(i)}>
                   {score ? (
@@ -1692,8 +1686,7 @@ export default function MatchExplorer({ T, M }) {
       {open !== null && (() => {
         const om = M[open];
         const oh = T[om.h], oa = T[om.a];
-        const scoreKey = `${resolveScoreNorm(oh?.n)}-${resolveScoreNorm(oa?.n)}`;
-        const hasResult = !!(scoreMap[scoreKey]);
+        const hasResult = !!(oh && oa && scoreForMatch(oh.n, oa.n, scoreMap));
         return <MatchDetail m={om} T={T} onClose={closeMatch} onOpenPlayer={openPlayer} hasResult={hasResult} />;
       })()}
       {player && <PlayerModal id={player.id} name={player.name} teamCode={player.teamCode} photo={player.photo} onClose={() => setPlayer(null)} />}
