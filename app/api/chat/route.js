@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import { getScoreboard } from '../../../lib/apiFootball';
-import { T, KO, R16 } from '../../../lib/staticData';
+import { T, FINAL } from '../../../lib/staticData';
 
 export const maxDuration = 30;
 
@@ -20,7 +20,7 @@ function normToDisplay(norm) {
 async function buildContext(leaders = {}) {
   const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
-  const koDates = ['20260629','20260630','20260701','20260702','20260703','20260704','20260705','20260706','20260707'];
+  const koDates = ['20260628','20260629','20260630','20260701','20260702','20260703','20260704','20260705','20260706','20260707','20260709','20260710','20260711','20260714','20260715','20260718','20260719'];
   const past = koDates.filter(d => d <= todayStr);
   const scoreArrays = await Promise.allSettled(past.map(d => withTimeout(getScoreboard(d), 5000)));
   const allScores = scoreArrays.flatMap(r => r.status === 'fulfilled' ? r.value : []);
@@ -38,10 +38,12 @@ async function buildContext(leaders = {}) {
     .map((p, i) => `  ${i + 1}. ${p.name} (${p.teamName}) — ${p.assists} assists`)
     .join('\n') || '  No data yet';
 
-  const r16Lines = R16.map(m => {
+  const fixtureLine = m => {
     const h = T[m.h], a = T[m.a];
     return `  ${h?.n || m.h} vs ${a?.n || m.a} | ${m.ds} ${m.t} ${m.z} | ${m.v}, ${m.c}`;
-  }).join('\n');
+  };
+  const finalLines = FINAL.map(fixtureLine).join('\n');
+  const finalists = [...new Set(FINAL.flatMap(m => [T[m.h]?.n || m.h, T[m.a]?.n || m.a]))].join(' vs ');
 
   const teamLines = Object.values(T)
     .map(t => `  ${t.f} ${t.n}: ${t.odds} odds | Best WC finish: ${t.best}`)
@@ -50,7 +52,7 @@ async function buildContext(leaders = {}) {
   return `You are WC26 Analyst — the AI football analyst built into the WC26 Matchday Intelligence app by Ovais Yusuf.
 Today: ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.
 Tournament: 2026 FIFA World Cup hosted by USA, Canada, and Mexico.
-Phase: Knockouts — group stage complete, Round of 32 complete, Round of 16 in progress.
+Phase: Knockouts — the group stage, Round of 32, Round of 16, Quarter-finals and Semi-finals are ALL complete. Only the FINAL remains: ${finalists}, on Sunday July 19 at MetLife Stadium, New Jersey. In the semi-finals Spain beat France 2-0 and Argentina beat England 2-1.
 
 == TOP SCORERS ==
 ${scorerLines}
@@ -58,11 +60,11 @@ ${scorerLines}
 == TOP ASSISTS ==
 ${assistLines}
 
-== KNOCKOUT RESULTS (R32 + R16 so far) ==
+== KNOCKOUT RESULTS (R32 → Semi-finals) ==
 ${resultLines}
 
-== ROUND OF 16 FIXTURES ==
-${r16Lines}
+== THE FINAL ==
+${finalLines}
 
 == ALL 32 TEAMS ==
 ${teamLines}

@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { T, M, M2, M3, KO, R16 } from '../lib/staticData';
+import { T, M, M2, M3, KO, R16, QF, SF, FINAL } from '../lib/staticData';
 import { TOURNAMENT_THEMES } from '../lib/editorial';
 import MatchExplorer from '../components/MatchExplorer';
 import TournamentLeaders from '../components/TournamentLeaders';
@@ -75,7 +75,7 @@ function useTournamentSnapshot() {
 
 export default function Page() {
   const [statsOpen, setStatsOpen] = useState(false);
-  const [activeMainTab, setActiveMainTab] = useState('matchday');
+  const [activeMainTab, setActiveMainTab] = useState('final');
   const [theme, setTheme] = useState('light');
   const snap = useTournamentSnapshot();
 
@@ -112,6 +112,9 @@ export default function Page() {
           <button className="tab" role="tab" aria-selected={activeMainTab === 'md3'} onClick={() => setActiveMainTab('md3')}>MD3</button>
           <button className="tab" role="tab" aria-selected={activeMainTab === 'knockouts'} onClick={() => setActiveMainTab('knockouts')}>Round of 32</button>
           <button className="tab" role="tab" aria-selected={activeMainTab === 'r16'} onClick={() => setActiveMainTab('r16')}>Round of 16</button>
+          <button className="tab" role="tab" aria-selected={activeMainTab === 'qf'} onClick={() => setActiveMainTab('qf')}>Quarter-finals</button>
+          <button className="tab" role="tab" aria-selected={activeMainTab === 'sf'} onClick={() => setActiveMainTab('sf')}>Semi-finals</button>
+          <button className="tab" role="tab" aria-selected={activeMainTab === 'final'} onClick={() => setActiveMainTab('final')}>🏆 Final</button>
           <button className="tab" role="tab" aria-selected={activeMainTab === 'bracket'} onClick={() => setActiveMainTab('bracket')}>Bracket</button>
           <button className="tab tab-stats" role="tab" aria-selected={activeMainTab === 'standings'} onClick={() => setActiveMainTab('standings')} style={{ marginLeft: 'auto' }}>📊 Standings</button>
           <button className="tab tab-stats" role="tab" aria-selected={activeMainTab === 'stats'} onClick={() => setActiveMainTab('stats')}>🏅 Stats</button>
@@ -230,6 +233,59 @@ export default function Page() {
             <MatchExplorer T={T} M={R16} />
             <p className="scope" style={{ marginTop: 38 }}>
               Argentina and Colombia fixtures depend on tonight&apos;s results. Both are listed with the expected opponents.
+            </p>
+          </>
+        )}
+
+        {activeMainTab === 'qf' && (
+          <>
+            <section className="hero">
+              <div className="eyebrow">FIFA World Cup 26 · Quarter-finals</div>
+              <h1>Down to the last eight.</h1>
+              <p>The quarter-finals are settled. France ended Morocco&apos;s run, Spain edged Belgium, England saw off Haaland&apos;s Norway, and Argentina&apos;s title defence rolls on. Four teams remain. Tap any tie for the full match report, lineups and stats.</p>
+              <div className="ctx">
+                <div className="pill"><span>Dates</span><b>Jul 9 to Jul 11</b></div>
+                <div className="pill"><span>Semi-finalists</span><b>FRA · ESP · ENG · ARG</b></div>
+                <div className="pill"><span>Gone</span><b>Morocco · Belgium · Norway · Switzerland</b></div>
+              </div>
+            </section>
+            <MatchExplorer T={T} M={QF} />
+          </>
+        )}
+
+        {activeMainTab === 'sf' && (
+          <>
+            <section className="hero">
+              <div className="eyebrow">FIFA World Cup 26 · Semi-finals</div>
+              <h1>The semi-finals are settled.</h1>
+              <p>Spain brushed France aside 2-0, and Argentina came through a classic against England 2-1. Two heavyweights remain, and the Final is set. Tap either tie for the full match report, lineups and stats.</p>
+              <div className="ctx">
+                <div className="pill"><span>Dates</span><b>Jul 14 <i>&amp;</i> Jul 15</b></div>
+                <div className="pill"><span>Spain 2-0 France</span><b>Spain to the final</b></div>
+                <div className="pill"><span>Argentina 2-1 England</span><b>Champions march on</b></div>
+                <div className="pill"><span>Final</span><b>Spain vs Argentina · Jul 19</b></div>
+              </div>
+            </section>
+            <MatchExplorer T={T} M={SF} />
+          </>
+        )}
+
+        {activeMainTab === 'final' && (
+          <>
+            <section className="hero">
+              <div className="eyebrow">FIFA World Cup 26 · The Final</div>
+              <h1>One match left. Spain vs Argentina.</h1>
+              <p>48 teams became two. Spain, who have not trailed for a single minute all tournament, against Messi and the reigning champions Argentina. The 2026 FIFA World Cup Final, at MetLife Stadium on July 19. Tap the match for the full preview, confirmed lineups once they drop, and the live report.</p>
+              <div className="ctx">
+                <div className="pill"><span>Date</span><b>Sunday, July 19</b></div>
+                <div className="pill"><span>Venue</span><b>MetLife Stadium, NJ</b></div>
+                <div className="pill"><span>Spain</span><b>Unbeaten, never trailed</b></div>
+                <div className="pill"><span>Argentina</span><b>Messi · defending champions</b></div>
+              </div>
+            </section>
+            <MatchExplorer T={T} M={FINAL} />
+            <p className="scope" style={{ marginTop: 38 }}>
+              The final preview reflects pre-match expectations. The live score and full match report replace the preview automatically once the match kicks off.
             </p>
           </>
         )}

@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { T, FINAL } from '../../../lib/staticData';
 
 export const maxDuration = 30;
 
@@ -11,15 +12,19 @@ export async function POST(request) {
     .map((p, i) => `${i + 1}. ${p.name} (${p.teamName}) — ${p.goals} goals`)
     .join('\n') || 'Data unavailable';
 
-  const prompt = `You are explaining the 2026 FIFA World Cup to someone who has never watched football in their life. Today is July 6, 2026.
+  const finalists = [...new Set(FINAL.flatMap(m => [T[m.h]?.n || m.h, T[m.a]?.n || m.a]))].join(' vs ');
+
+  const prompt = `You are explaining the 2026 FIFA World Cup to someone who has never watched football in their life.
 
 Here is the current state of the tournament:
-- 48 teams started. Now only 8 remain (the quarterfinals).
+- 48 teams started. It is now down to the last TWO — only the FINAL is left.
 - The tournament is hosted across USA, Canada, and Mexico.
+- The Final is ${finalists}, on July 19 at MetLife Stadium, New Jersey. The winner is world champion.
+- In the semi-finals, Spain beat France 2-0 and Argentina (led by Lionel Messi) beat England 2-1.
 - Top scorers so far:
 ${scorers}
 
-Write a 5–6 sentence plain-English summary that answers: what is the World Cup, what has happened so far, who are the stars, and why should someone care about the next few weeks?
+Write a 5–6 sentence plain-English summary that answers: what is the World Cup, what has happened so far, who is in the final and who are the stars, and why this one last match matters.
 
 Rules:
 - Assume zero football knowledge. Explain any jargon in brackets if you must use it.
