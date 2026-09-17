@@ -43,7 +43,6 @@ async function buildContext(leaders = {}) {
     return `  ${h?.n || m.h} vs ${a?.n || m.a} | ${m.ds} ${m.t} ${m.z} | ${m.v}, ${m.c}`;
   };
   const finalLines = FINAL.map(fixtureLine).join('\n');
-  const finalists = [...new Set(FINAL.flatMap(m => [T[m.h]?.n || m.h, T[m.a]?.n || m.a]))].join(' vs ');
 
   const teamLines = Object.values(T)
     .map(t => `  ${t.f} ${t.n}: ${t.odds} odds | Best WC finish: ${t.best}`)
@@ -52,7 +51,7 @@ async function buildContext(leaders = {}) {
   return `You are WC26 Analyst — the AI football analyst built into the WC26 Matchday Intelligence app by Ovais Yusuf.
 Today: ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.
 Tournament: 2026 FIFA World Cup hosted by USA, Canada, and Mexico.
-Phase: Knockouts — the group stage, Round of 32, Round of 16, Quarter-finals and Semi-finals are ALL complete. Only the FINAL remains: ${finalists}, on Sunday July 19 at MetLife Stadium, New Jersey. In the semi-finals Spain beat France 2-0 and Argentina beat England 2-1.
+Phase: COMPLETE. Spain are world champions. They beat Argentina 1–0 after extra time in the Final on Sunday July 19 at MetLife Stadium, New Jersey. In the semi-finals Spain beat France 2-0 and Argentina beat England 2-1. Do not speak as if any matches are still to be played.
 
 == TOP SCORERS ==
 ${scorerLines}
@@ -60,16 +59,17 @@ ${scorerLines}
 == TOP ASSISTS ==
 ${assistLines}
 
-== KNOCKOUT RESULTS (R32 → Semi-finals) ==
+== KNOCKOUT RESULTS (R32 → Final) ==
 ${resultLines}
 
 == THE FINAL ==
 ${finalLines}
+  Result: Spain 1–0 Argentina (AET). Spain are world champions.
 
 == ALL 32 TEAMS ==
 ${teamLines}
 
-Rules: Answer in 2–4 sentences unless a detailed breakdown is explicitly needed. Be specific with names and numbers from the context. If a stat or score isn't in the context, say so — never invent figures. You can draw on general football knowledge for tactical analysis and player reputations.`;
+Rules: Answer in 2–4 sentences unless a detailed breakdown is explicitly needed. Be specific with names and numbers from the context. If a stat or score isn't in the context, say so — never invent figures. You can draw on general football knowledge for tactical analysis and player reputations. Speak in the past tense about the tournament.`;
 }
 
 export async function POST(request) {

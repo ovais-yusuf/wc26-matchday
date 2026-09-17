@@ -53,8 +53,8 @@ export default function CatchMeUp() {
         <div className="catchup-idle">
           <div className="catchup-badge">✦ AI</div>
           <div className="catchup-copy">
-            <div className="catchup-title">Not a football fan?</div>
-            <div className="catchup-sub">Get caught up on the entire tournament in 30 seconds — no football knowledge needed.</div>
+            <div className="catchup-title">Missed the World Cup?</div>
+            <div className="catchup-sub">It&apos;s over. Spain are champions. Get the whole story in 30 seconds — no football knowledge needed.</div>
           </div>
           <button className="catchup-btn" onClick={generate}>Catch me up</button>
         </div>

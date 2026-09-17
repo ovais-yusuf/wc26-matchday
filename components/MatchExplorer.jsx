@@ -457,7 +457,7 @@ function PlayerModal({ id, name, teamCode, photo, onClose }) {
                   </div>
                 ) : (
                   <div className="wcempty">
-                    <p>The 2026 World Cup hasn&apos;t kicked off for them yet. Live tournament stats will appear here once they play.</p>
+                    <p>They did not record any 2026 World Cup stats on this feed. Career World Cup numbers, if they have any, are below.</p>
                     {data.careerWcGoals ? (
                       <div className="wc">
                         <span className="total">{data.careerWcGoals.total} <small>career WC goal{data.careerWcGoals.total === 1 ? '' : 's'}</small></span>

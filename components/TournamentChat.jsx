@@ -2,12 +2,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 const SUGGESTIONS = [
-  'Who are the top scorers so far?',
+  'Who won the World Cup?',
+  'Who were the top scorers?',
   "What's the biggest upset of the tournament?",
-  'Which teams have already been eliminated?',
-  'Who should I watch in the Round of 16?',
-  "What's Spain vs Portugal all about?",
-  'Which goalkeeper has been the best?',
+  'How did Spain beat Argentina?',
+  'Which teams reached the semi-finals?',
+  'Which goalkeeper was the best?',
 ];
 
 function Cursor() {
@@ -107,7 +107,7 @@ export default function TournamentChat() {
           <div className="chat-header">
             <div>
               <div className="chat-title">WC26 Analyst</div>
-              <div className="chat-subtitle">Powered by Claude · Live tournament data</div>
+              <div className="chat-subtitle">The 2026 World Cup is over · Spain are champions</div>
             </div>
             <button className="chat-close" onClick={() => setOpen(false)} aria-label="Close">✕</button>
           </div>
@@ -148,7 +148,7 @@ export default function TournamentChat() {
               className="chat-input"
               value={input}
               onChange={e => setInput(e.target.value)}
-              placeholder="Ask about scores, players, form…"
+              placeholder="Ask who won, scorers, upsets…"
               disabled={streaming}
             />
             <button className="chat-send" type="submit" disabled={!input.trim() || streaming} aria-label="Send">

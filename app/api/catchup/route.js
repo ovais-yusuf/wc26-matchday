@@ -1,5 +1,4 @@
 import OpenAI from 'openai';
-import { T, FINAL } from '../../../lib/staticData';
 
 export const maxDuration = 30;
 
@@ -12,26 +11,24 @@ export async function POST(request) {
     .map((p, i) => `${i + 1}. ${p.name} (${p.teamName}) — ${p.goals} goals`)
     .join('\n') || 'Data unavailable';
 
-  const finalists = [...new Set(FINAL.flatMap(m => [T[m.h]?.n || m.h, T[m.a]?.n || m.a]))].join(' vs ');
-
   const prompt = `You are explaining the 2026 FIFA World Cup to someone who has never watched football in their life.
 
 Here is the current state of the tournament:
-- 48 teams started. It is now down to the last TWO — only the FINAL is left.
-- The tournament is hosted across USA, Canada, and Mexico.
-- The Final is ${finalists}, on July 19 at MetLife Stadium, New Jersey. The winner is world champion.
+- The 2026 FIFA World Cup is OVER. Spain are world champions.
+- 48 teams started. It was hosted across USA, Canada, and Mexico.
+- Spain beat Argentina 1–0 after extra time in the Final on July 19 at MetLife Stadium, New Jersey.
 - In the semi-finals, Spain beat France 2-0 and Argentina (led by Lionel Messi) beat England 2-1.
-- Top scorers so far:
+- Top scorers:
 ${scorers}
 
-Write a 5–6 sentence plain-English summary that answers: what is the World Cup, what has happened so far, who is in the final and who are the stars, and why this one last match matters.
+Write a 5–6 sentence plain-English summary that answers: what is the World Cup, what happened, who won, who the stars were, and why this tournament mattered.
 
 Rules:
 - Assume zero football knowledge. Explain any jargon in brackets if you must use it.
 - Use real player names and real numbers from the context.
-- Make it feel exciting — this is the biggest sports event on the planet.
+- Make it feel exciting — this was the biggest sports event on the planet.
 - Do not use bullet points or headers. Write it as one flowing paragraph.
-- End with who the favourites are to win the whole thing.`;
+- End by stating clearly that Spain won the World Cup. Do not talk as if any matches are still to be played.`;
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({

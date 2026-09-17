@@ -10,10 +10,10 @@ const sans = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'WC26 · Matchday Intelligence',
-  description: 'Every 2026 FIFA World Cup match, read before kickoff: projected results, the tale of the tape, full squads, starting lineups on the pitch, and a profile for every player. Live and free.',
+  description: 'The 2026 FIFA World Cup is over. Spain are champions. Every match, result, report, lineup and player profile — a complete archive.',
   openGraph: {
     title: 'WC26 · Matchday Intelligence',
-    description: 'Projected results, full squads, starting lineups and player profiles for the 2026 FIFA World Cup.',
+    description: 'Spain are world champions. Every 2026 FIFA World Cup match, result, report and lineup, in one place.',
     type: 'website',
     images: ['/og.png'],
   },

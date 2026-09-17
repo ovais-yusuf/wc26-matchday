@@ -127,13 +127,13 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Matchday 1</div>
-              <h1>The tournament opener. Every match, read for you.</h1>
+              <h1>Matchday 1 is in the books.</h1>
               <p>Matchday 1 is done. All 24 opening fixtures are wrapped up with results, match reports, lineups and full player stats. Tap any fixture to read the full breakdown of what actually happened.</p>
               <div className="ctx">
                 <div className="pill"><span>Top scorer</span><b>{snap?.topScorer ?? 'Loading…'}</b></div>
                 <div className="pill"><span>Biggest result</span><b>Germany 7–1 Curaçao</b></div>
-                {snap?.qualified && <div className="pill"><span>Already qualified</span><b>{snap.qualified}</b></div>}
-                {snap?.brink && <div className="pill"><span>On the brink</span><b>{snap.brink}</b></div>}
+                {snap?.qualified && <div className="pill"><span>Through early</span><b>{snap.qualified}</b></div>}
+                {snap?.brink && <div className="pill"><span>Went out early</span><b>{snap.brink}</b></div>}
               </div>
             </section>
 
@@ -150,7 +150,7 @@ export default function Page() {
             <MatchExplorer T={T} M={M} />
 
             <p className="scope" style={{ marginTop: 38 }}>
-              Projected results blend the betting markets with World Cup pedigree; they are probabilities, not promises. Squads, starting lineups and player profiles are pulled live from ESPN&apos;s public feed; the verdicts, venues and verified career-goal records render instantly, even if the live feed is unavailable.
+              Pre-match notes still live in each fixture&apos;s preview tab. Open a match for the result and the full report.
             </p>
           </>
         )}
@@ -159,8 +159,8 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Matchday 2</div>
-              <h1>Group standings start to crystallize.</h1>
-              <p>Some teams edge toward the Round of 32. Others face must-win situations. Open any fixture for the live score, the match report, and full tactical analysis. Starting XIs appear the moment they drop.</p>
+              <h1>Matchday 2 is in the books.</h1>
+              <p>Twenty-four more group games, and the tables took shape. Open any fixture for the score, the match report, and the full tactical write-up.</p>
               <div className="ctx">
                 <div className="pill"><span>Dates</span><b>June 18 <i>–</i> June 23</b></div>
                 <div className="pill"><span>Matches</span><b>24 fixtures · 12 groups</b></div>
@@ -170,7 +170,7 @@ export default function Page() {
             </section>
             <MatchExplorer T={T} M={M2} />
             <p className="scope" style={{ marginTop: 38 }}>
-              Projected results and editorial analysis reflect pre-match expectations. Live scores and match reports replace the preview automatically once a fixture kicks off.
+              Pre-match notes still live in the preview tab. Open a fixture for the result and the full match report.
             </p>
           </>
         )}
@@ -179,8 +179,8 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Matchday 3</div>
-              <h1>The group stage finale. Everything on the line.</h1>
-              <p>Both games in every group play simultaneously, the format that produces the most dramatic final day in football. Qualification spots, eliminations and seedings all decided in 24 matches across four days. Live scores and match reports update the moment they drop.</p>
+              <h1>The group stage is over.</h1>
+              <p>Both games in every group kicked off together. Qualification, elimination and seeding were settled across 24 matches. Tap any fixture for the result and the report.</p>
               <div className="ctx">
                 <div className="pill"><span>Dates</span><b>June 24 to June 29</b></div>
                 <div className="pill"><span>Format</span><b>Both group games simultaneous</b></div>
@@ -190,7 +190,7 @@ export default function Page() {
             </section>
             <MatchExplorer T={T} M={M3} />
             <p className="scope" style={{ marginTop: 38 }}>
-              Live scores and match reports replace the preview automatically once a fixture kicks off. Both games in each group play at the same kickoff time. The drama unfolds simultaneously.
+              Both games in each group kicked off at the same time. Open a match for the score and the full report.
             </p>
           </>
         )}
@@ -210,8 +210,8 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Round of 32</div>
-              <h1>Round of 32</h1>
-              <p>The group stage is over. 32 teams remain. One game, one chance. Canada have already eliminated South Africa. Tap any fixture for the full match report, lineups, stats and tactical breakdown.</p>
+              <h1>The Round of 32 is complete.</h1>
+              <p>The group stage gave way to 16 knockout ties. Canada opened it by eliminating South Africa. Tap any fixture for the match report, lineups and stats.</p>
             </section>
             <MatchExplorer T={T} M={KO} />
           </>
@@ -221,8 +221,8 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Round of 16</div>
-              <h1>The last 16. One game, everything on the line.</h1>
-              <p>All eight Round of 16 fixtures confirmed. The Iberian derby, England vs Mexico on hostile turf, and Messi vs Switzerland. Tap any fixture for the full match preview, confirmed lineups once they drop, and live match reports.</p>
+              <h1>The last 16 is complete.</h1>
+              <p>Spain beat Portugal, Morocco knocked out Canada, England saw off Mexico, and Argentina beat Egypt. Tap any fixture for the report, lineups and stats.</p>
               <div className="ctx">
                 <div className="pill"><span>Dates</span><b>Jul 4 to Jul 7</b></div>
                 <div className="pill"><span>Match of the round</span><b>Spain vs Portugal</b></div>
@@ -231,9 +231,6 @@ export default function Page() {
               </div>
             </section>
             <MatchExplorer T={T} M={R16} />
-            <p className="scope" style={{ marginTop: 38 }}>
-              Argentina and Colombia fixtures depend on tonight&apos;s results. Both are listed with the expected opponents.
-            </p>
           </>
         )}
 
@@ -241,8 +238,8 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Quarter-finals</div>
-              <h1>Down to the last eight.</h1>
-              <p>The quarter-finals are settled. France ended Morocco&apos;s run, Spain edged Belgium, England saw off Haaland&apos;s Norway, and Argentina&apos;s title defence rolls on. Four teams remain. Tap any tie for the full match report, lineups and stats.</p>
+              <h1>The last eight is history.</h1>
+              <p>France ended Morocco&apos;s run, Spain edged Belgium, England saw off Haaland&apos;s Norway, and Argentina beat Switzerland. Spain would go on to win the World Cup. Tap any tie for the report, lineups and stats.</p>
               <div className="ctx">
                 <div className="pill"><span>Dates</span><b>Jul 9 to Jul 11</b></div>
                 <div className="pill"><span>Semi-finalists</span><b>FRA · ESP · ENG · ARG</b></div>
@@ -257,13 +254,13 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Semi-finals</div>
-              <h1>The semi-finals are settled.</h1>
-              <p>Spain brushed France aside 2-0, and Argentina came through a classic against England 2-1. Two heavyweights remain, and the Final is set. Tap either tie for the full match report, lineups and stats.</p>
+              <h1>The semi-finals are done.</h1>
+              <p>Spain beat France 2–0. Argentina beat England 2–1. Those two met in the Final — and Spain are world champions. Tap either tie for the report, lineups and stats.</p>
               <div className="ctx">
                 <div className="pill"><span>Dates</span><b>Jul 14 <i>&amp;</i> Jul 15</b></div>
-                <div className="pill"><span>Spain 2-0 France</span><b>Spain to the final</b></div>
-                <div className="pill"><span>Argentina 2-1 England</span><b>Champions march on</b></div>
-                <div className="pill"><span>Final</span><b>Spain vs Argentina · Jul 19</b></div>
+                <div className="pill"><span>Spain 2–0 France</span><b>Spain through</b></div>
+                <div className="pill"><span>Argentina 2–1 England</span><b>Argentina through</b></div>
+                <div className="pill"><span>Final</span><b>Spain 1–0 Argentina · AET</b></div>
               </div>
             </section>
             <MatchExplorer T={T} M={SF} />
@@ -274,18 +271,18 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · The Final</div>
-              <h1>One match left. Spain vs Argentina.</h1>
-              <p>48 teams became two. Spain, who have not trailed for a single minute all tournament, against Messi and the reigning champions Argentina. The 2026 FIFA World Cup Final, at MetLife Stadium on July 19. Tap the match for the full preview, confirmed lineups once they drop, and the live report.</p>
+              <h1>Spain are world champions.</h1>
+              <p>Spain beat Argentina 1–0 after extra time at MetLife Stadium on July 19. Forty-eight teams, one winner. Tap the match for the full report, lineups and stats.</p>
               <div className="ctx">
-                <div className="pill"><span>Date</span><b>Sunday, July 19</b></div>
+                <div className="pill"><span>Champion</span><b>Spain</b></div>
+                <div className="pill"><span>Final</span><b>Spain 1–0 Argentina · AET</b></div>
                 <div className="pill"><span>Venue</span><b>MetLife Stadium, NJ</b></div>
-                <div className="pill"><span>Spain</span><b>Unbeaten, never trailed</b></div>
-                <div className="pill"><span>Argentina</span><b>Messi · defending champions</b></div>
+                <div className="pill"><span>Date</span><b>Sunday, July 19</b></div>
               </div>
             </section>
             <MatchExplorer T={T} M={FINAL} />
             <p className="scope" style={{ marginTop: 38 }}>
-              The final preview reflects pre-match expectations. The live score and full match report replace the preview automatically once the match kicks off.
+              The 2026 FIFA World Cup is over. Open the final for the match report.
             </p>
           </>
         )}
@@ -294,12 +291,12 @@ export default function Page() {
           <>
             <section className="hero">
               <div className="eyebrow">FIFA World Cup 26 · Tournament Bracket</div>
-              <h1>The path to glory.</h1>
-              <p>Every knockout game in one view, from the Round of 32 all the way to the Final at MetLife Stadium on July 19. Winners advance automatically as results come in.</p>
+              <h1>Spain&apos;s path to the trophy.</h1>
+              <p>Every knockout game in one view, from the Round of 32 to Spain&apos;s extra-time win over Argentina in the Final. The 2026 World Cup is complete.</p>
               <div className="ctx">
-                <div className="pill"><span>Rounds</span><b>R32 · R16 · QF · SF · Final</b></div>
-                <div className="pill"><span>Final</span><b>Jul 19 · MetLife Stadium, NJ</b></div>
-                <div className="pill"><span>First result</span><b>Canada 1-0 South Africa</b></div>
+                <div className="pill"><span>Champion</span><b>Spain</b></div>
+                <div className="pill"><span>Final</span><b>Spain 1–0 Argentina · AET</b></div>
+                <div className="pill"><span>Venue</span><b>MetLife Stadium, NJ</b></div>
               </div>
             </section>
             <BracketView T={T} />
@@ -325,7 +322,7 @@ export default function Page() {
               rel="noopener noreferrer"
             >LinkedIn ↗</a>
           </div>
-          <p><b>Data.</b> Fixtures, kickoff times (US Eastern), venues and verdicts are hand-verified as of June 2026. Squads, starting lineups and player profiles come live from ESPN&apos;s public feed, with no API key and no quota. Lineups appear on the pitch roughly an hour before kickoff; until then, each match shows the full squad.</p>
+          <p><b>Data.</b> The 2026 FIFA World Cup is over. Fixtures, kickoff times (US Eastern) and venues were hand-verified. Squads, starting lineups and player profiles come from ESPN&apos;s public feed. Every result, report and squad is here to look back on.</p>
         </div>
       </footer>
     </>
