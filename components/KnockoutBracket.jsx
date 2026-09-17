@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useMemo } from 'react';
+import { loadScores } from '../lib/espnScoreboard';
 
 const MONTHS = { January:'01', February:'02', March:'03', April:'04', May:'05', June:'06', July:'07', August:'08', September:'09', October:'10', November:'11', December:'12' };
 function fixtureDate(m) {
@@ -32,9 +33,8 @@ export default function KnockoutBracket({ T, KO }) {
       for (const date of dates) {
         if (date > todayStr) continue;
         try {
-          const r = await fetch(`/api/scores?date=${date}`);
-          const d = await r.json();
-          for (const s of d.scores || []) {
+          const scores = await loadScores(date);
+          for (const s of scores) {
             upd[`${s.homeName}-${s.awayName}`] = s;
           }
         } catch {}

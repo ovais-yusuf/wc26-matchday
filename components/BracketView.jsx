@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useMemo } from 'react';
 import { R32, R16, QF, SF, FINAL, BRACKET_ORDER } from '../lib/bracketData';
+import { loadScores } from '../lib/espnScoreboard';
 
 /* ── helpers ── */
 const MONTHS = { January:'01',February:'02',March:'03',April:'04',May:'05',June:'06',July:'07',August:'08',September:'09',October:'10',November:'11',December:'12' };
@@ -116,9 +117,8 @@ export default function BracketView({ T }) {
       for (const d of ALL_DATES) {
         if (d > today) continue;
         try {
-          const r = await fetch(`/api/scores?date=${d}`);
-          const j = await r.json();
-          for (const s of j.scores||[]) upd[`${s.homeName}-${s.awayName}`] = s;
+          const scores = await loadScores(d);
+          for (const s of scores) upd[`${s.homeName}-${s.awayName}`] = s;
         } catch {}
       }
       setMap(p => ({...p,...upd}));

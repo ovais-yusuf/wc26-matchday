@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { getEditorial, getTeamIdentity, UPSET, CHEMISTRY, ZONE_COORDS, STORYLINES } from '../lib/editorial';
+import { loadScores } from '../lib/espnScoreboard';
 
 /* ---------- helpers ---------- */
 const confLabel = (c) => (c === 'high' ? 'High confidence' : c === 'lean' ? 'Lean' : 'Toss-up');
@@ -1604,12 +1605,11 @@ export default function MatchExplorer({ T, M }) {
     async function fetchScoresForDate(date) {
       if (date > todayStr) return;
       try {
-        const r = await fetch(`/api/scores?date=${date}`);
-        const d = await r.json();
+        const scores = await loadScores(date);
         if (cancelled) return;
         const newEntries = {};
         let hasLive = false;
-        for (const s of d.scores || []) {
+        for (const s of scores) {
           newEntries[`${s.homeName}-${s.awayName}`] = s;
           if (s.status === 'live') hasLive = true;
         }
@@ -1617,7 +1617,7 @@ export default function MatchExplorer({ T, M }) {
           setScoreMap((prev) => ({ ...prev, ...newEntries }));
         }
         // Stop polling once every match on this date is final
-        const allFinal = (d.scores || []).length > 0 && (d.scores || []).every(s => s.status === 'final');
+        const allFinal = scores.length > 0 && scores.every(s => s.status === 'final');
         if (!cancelled && !allFinal) {
           const interval = hasLive ? 30000 : 120000;
           timers.push(setTimeout(() => fetchScoresForDate(date), interval));
